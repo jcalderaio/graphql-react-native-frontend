@@ -1,20 +1,101 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
-import {
-  View,
-  Container,
-  Content,
-  Button,
-  Text,
-  Card,
-  CardItem,
-  Grid
-} from 'native-base';
+import { Query } from 'react-apollo';
+import { View, Text, Card, CardItem, Grid, Button } from 'native-base';
 import { Dimensions } from 'react-native';
 
 const midscreen = Dimensions.get('window').height / 4;
 
+export default ({ reservationId }) => (
+  <Query query={GET_RESERVATION} variables={{ id: reservationId }}>
+    {({ loading, error, data, refetch }) => {
+      if (loading) return <Text>Loading...</Text>;
+      if (error) {
+        return (
+          <View style={styles.centerContainter}>
+            <Text style={{ justifyContent: 'center', marginTop: midscreen }}>
+              Please enter a valid Reservation ID...
+            </Text>
+            <Button
+              block
+              style={styles.reservationButton}
+              onClick={() => refetch({ id: reservationId })}
+            >
+              <Text>Find Reservation</Text>
+            </Button>
+          </View>
+        );
+      }
+
+      return (
+        <View>
+          <Card key={data.reservation.id}>
+            <CardItem bordered>
+              <Grid style={styles.gridStyle}>
+                <Text>Name on Reservation: {data.reservation.name}</Text>
+              </Grid>
+            </CardItem>
+            <CardItem bordered>
+              <Grid style={styles.gridStyle}>
+                <Text>Hotel: {data.reservation.hotelName}</Text>
+              </Grid>
+            </CardItem>
+            <CardItem bordered>
+              <Grid style={styles.gridStyle}>
+                <Text>Check-In Date: {data.reservation.arrivalDate}</Text>
+              </Grid>
+            </CardItem>
+            <CardItem bordered>
+              <Grid style={styles.gridStyle}>
+                <Text>Check-Out Date: {data.reservation.departureDate}</Text>
+              </Grid>
+            </CardItem>
+          </Card>
+          <View>
+            <Button
+              block
+              style={styles.reservationButton}
+              onClick={() => refetch({ id: reservationId })}
+            >
+              <Text>Find Reservation</Text>
+            </Button>
+          </View>
+        </View>
+      );
+    }}
+  </Query>
+);
+
+const GET_RESERVATION = gql`
+  query reservation($id: ID!) {
+    reservation(id: $id) {
+      id
+      name
+      hotelName
+      arrivalDate
+      departureDate
+    }
+  }
+`;
+
+const styles = {
+  reservationButton: {
+    backgroundColor: '#EF5350',
+    marginHorizontal: 20,
+    marginTop: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2
+  },
+  centerContainter: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+};
+
+/*
 // A mutation is made available on a callback called `mutate`
 // Other props of the wrapping component are passed through.
 function FindReservation({ data: { loading, reservation } }) {
@@ -66,9 +147,9 @@ function FindReservation({ data: { loading, reservation } }) {
         <Text>Find Reservation</Text>
       </Button>
     </View>
-*/
 
-const graphqlVariables = (/* props: */ { reservationId }) => ({
+
+const graphqlVariables = ( { reservationId }) => ({
   variables: {
     id: reservationId
   }
@@ -89,20 +170,4 @@ export default graphql(
   `,
   { options: graphqlVariables }
 )(FindReservation);
-
-const styles = {
-  reservationButton: {
-    backgroundColor: '#EF5350',
-    marginHorizontal: 20,
-    marginTop: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2
-  },
-  centerContainter: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-};
+*/

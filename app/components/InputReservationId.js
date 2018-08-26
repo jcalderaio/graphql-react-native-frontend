@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { graphql, ApolloProvider } from 'react-apollo';
-import gql from 'graphql-tag';
 import FindReservation from '../graphql/FindReservation';
 import {
   Container,
@@ -9,7 +7,6 @@ import {
   Title,
   Content,
   Text,
-  Grid,
   Form,
   Item,
   Input,
