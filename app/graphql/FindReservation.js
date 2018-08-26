@@ -7,8 +7,12 @@ import { Dimensions } from 'react-native';
 const midscreen = Dimensions.get('window').height / 4;
 
 export default ({ reservationId }) => (
-  <Query query={GET_RESERVATION} variables={{ id: reservationId }}>
-    {({ loading, error, data, refetch }) => {
+  <Query
+    query={GET_RESERVATION}
+    variables={{ id: reservationId }}
+    pollInterval={10}
+  >
+    {({ loading, error, data }) => {
       if (loading) return <Text>Loading...</Text>;
       if (error) {
         return (
@@ -16,13 +20,6 @@ export default ({ reservationId }) => (
             <Text style={{ justifyContent: 'center', marginTop: midscreen }}>
               Please enter a valid Reservation ID...
             </Text>
-            <Button
-              block
-              style={styles.reservationButton}
-              onClick={() => refetch({ id: reservationId })}
-            >
-              <Text>Find Reservation</Text>
-            </Button>
           </View>
         );
       }
@@ -30,6 +27,11 @@ export default ({ reservationId }) => (
       return (
         <View>
           <Card key={data.reservation.id}>
+            <CardItem bordered>
+              <Grid style={styles.gridStyle}>
+                <Text>Reservation ID: {data.reservation.id}</Text>
+              </Grid>
+            </CardItem>
             <CardItem bordered>
               <Grid style={styles.gridStyle}>
                 <Text>Name on Reservation: {data.reservation.name}</Text>
@@ -51,15 +53,7 @@ export default ({ reservationId }) => (
               </Grid>
             </CardItem>
           </Card>
-          <View>
-            <Button
-              block
-              style={styles.reservationButton}
-              onClick={() => refetch({ id: reservationId })}
-            >
-              <Text>Find Reservation</Text>
-            </Button>
-          </View>
+          <View />
         </View>
       );
     }}
