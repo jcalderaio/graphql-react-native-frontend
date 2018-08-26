@@ -11,8 +11,8 @@ import {
   Button,
   View
 } from 'native-base';
-import AllReservations from './components/AllReservations';
-import FindReservation from './components/FindReservation';
+import AllReservations from './graphql/AllReservations';
+import InputReservationId from './components/InputReservationId';
 
 // The data prop, which is provided by the wrapper below contains,
 // a `loading` key while the query is in flight and posts when ready
@@ -32,7 +32,7 @@ export default class Tabs extends Component {
         return <AllReservations />;
         break;
       case 'findReservation':
-        return <FindReservation />;
+        return <InputReservationId />;
         break;
       default:
     }

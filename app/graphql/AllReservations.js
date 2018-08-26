@@ -39,6 +39,11 @@ function AllReservations({ data: { loading, reservations } }) {
                 <Card key={res.id}>
                   <CardItem bordered>
                     <Grid style={styles.gridStyle}>
+                      <Text>Reservation ID: {res.id}</Text>
+                    </Grid>
+                  </CardItem>
+                  <CardItem bordered>
+                    <Grid style={styles.gridStyle}>
                       <Text>Name on Reservation: {res.name}</Text>
                     </Grid>
                   </CardItem>
