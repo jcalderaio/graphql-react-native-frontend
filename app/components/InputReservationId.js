@@ -63,7 +63,7 @@ export default class InputReservationId extends Component {
                 secureTextEntry={this.state.passwordEncrypted}
                 value={this.state.reservationId}
                 onChangeText={reservationId => this.setState({ reservationId })}
-                //returnKeyType={'send'}
+                autoCapitalize="none"
                 //onSubmitEditing={this.findReservation}
               />
               {/*Eye Button*/}

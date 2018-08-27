@@ -2,9 +2,9 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { View, Text, Button } from 'native-base';
+import _ from 'lodash';
 
 export default ({
-  id,
   name,
   hotelName,
   arrivalDate,
@@ -14,7 +14,13 @@ export default ({
 }) => (
   <Mutation
     mutation={ADD_RESERVATION}
-    variables={{ id, name, hotelName, arrivalDate, departureDate }}
+    variables={{
+      id: _.times(5, () => _.random(35).toString(36)).join(''),
+      name,
+      hotelName,
+      arrivalDate,
+      departureDate
+    }}
   >
     {mutate => (
       <View>
@@ -60,10 +66,6 @@ const ADD_RESERVATION = gql`
       departureDate: $departureDate
     ) {
       id
-      name
-      hotelName
-      arrivalDate
-      departureDate
     }
   }
 `;

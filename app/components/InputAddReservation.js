@@ -24,7 +24,6 @@ export default class InputAddReservation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
       firstName: '',
       lastName: '',
       hotelName: '',
@@ -35,7 +34,6 @@ export default class InputAddReservation extends Component {
 
   get validated() {
     if (
-      this.state.id != '' &&
       this.state.firstName != '' &&
       this.state.lastName != '' &&
       this.state.hotelName != '' &&
@@ -50,7 +48,6 @@ export default class InputAddReservation extends Component {
 
   clearForm = () => {
     this.setState({
-      id: '',
       firstName: '',
       lastName: '',
       hotelName: '',
@@ -75,20 +72,6 @@ export default class InputAddReservation extends Component {
               marginTop: 30
             }}
           >
-            <Item inlineLabel>
-              <Label
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: 14
-                }}
-              >
-                ID
-              </Label>
-              <Input
-                value={this.state.id}
-                onChangeText={id => this.setState({ id })}
-              />
-            </Item>
             <Item inlineLabel>
               <Label
                 style={{
@@ -201,7 +184,6 @@ export default class InputAddReservation extends Component {
             </Item>
           </Form>
           <AddReservation
-            id={this.state.id}
             name={`${this.state.firstName} ${this.state.lastName}`}
             hotelName={this.state.hotelName}
             arrivalDate={this.state.arrivalDate}
