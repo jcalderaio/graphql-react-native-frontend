@@ -24,7 +24,8 @@ export default class InputAddReservation extends Component {
     super(props);
     this.state = {
       id: '',
-      name: '',
+      firstName: '',
+      lastName: '',
       hotelName: '',
       arrivalDate: '',
       departureDate: ''
@@ -34,7 +35,8 @@ export default class InputAddReservation extends Component {
   get validated() {
     if (
       this.state.id != '' &&
-      this.state.name != '' &&
+      this.state.firstName != '' &&
+      this.state.lastName != '' &&
       this.state.hotelName != '' &&
       this.state.arrivalDate != '' &&
       this.state.departureDate != ''
@@ -48,7 +50,8 @@ export default class InputAddReservation extends Component {
   clearForm = () => {
     this.setState({
       id: '',
-      name: '',
+      firstName: '',
+      lastName: '',
       hotelName: '',
       arrivalDate: '',
       departureDate: ''
@@ -78,10 +81,9 @@ export default class InputAddReservation extends Component {
                   fontSize: 14
                 }}
               >
-                Reservation ID
+                ID
               </Label>
               <Input
-                secureTextEntry={this.state.passwordEncrypted}
                 value={this.state.id}
                 onChangeText={id => this.setState({ id })}
               />
@@ -93,12 +95,25 @@ export default class InputAddReservation extends Component {
                   fontSize: 14
                 }}
               >
-                First & Last Name
+                First Name
               </Label>
               <Input
-                secureTextEntry={this.state.passwordEncrypted}
-                value={this.state.name}
-                onChangeText={name => this.setState({ name })}
+                value={this.state.firstName}
+                onChangeText={firstName => this.setState({ firstName })}
+              />
+            </Item>
+            <Item inlineLabel>
+              <Label
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 14
+                }}
+              >
+                Last Name
+              </Label>
+              <Input
+                value={this.state.lastName}
+                onChangeText={lastName => this.setState({ lastName })}
               />
             </Item>
             <Item inlineLabel>
@@ -111,7 +126,6 @@ export default class InputAddReservation extends Component {
                 Hotel Name
               </Label>
               <Input
-                secureTextEntry={this.state.passwordEncrypted}
                 value={this.state.hotelName}
                 onChangeText={hotelName => this.setState({ hotelName })}
               />
@@ -126,7 +140,6 @@ export default class InputAddReservation extends Component {
                 Arrival Date
               </Label>
               <Input
-                secureTextEntry={this.state.passwordEncrypted}
                 value={this.state.arrivalDate}
                 onChangeText={arrivalDate => this.setState({ arrivalDate })}
               />
@@ -141,7 +154,6 @@ export default class InputAddReservation extends Component {
                 Departure Date
               </Label>
               <Input
-                secureTextEntry={this.state.passwordEncrypted}
                 value={this.state.departureDate}
                 onChangeText={departureDate => this.setState({ departureDate })}
               />
@@ -149,7 +161,7 @@ export default class InputAddReservation extends Component {
           </Form>
           <AddReservation
             id={this.state.id}
-            name={this.state.name}
+            name={`${this.state.firstName} ${this.state.lastName}`}
             hotelName={this.state.hotelName}
             arrivalDate={this.state.arrivalDate}
             departureDate={this.state.departureDate}
