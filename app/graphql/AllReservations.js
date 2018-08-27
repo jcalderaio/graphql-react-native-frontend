@@ -13,15 +13,47 @@ import {
   CardItem,
   Grid
 } from 'native-base';
+import { Dimensions } from 'react-native';
+
+const midscreen = Dimensions.get('window').height / 4;
 
 // The data prop, which is provided by the wrapper below contains,
 // a `loading` key while the query is in flight and posts when ready
 //All Reservations
 export default () => (
-  <Query query={GET_RESERVATIONS}>
+  <Query query={GET_RESERVATIONS} pollInterval={500}>
     {({ loading, error, data }) => {
-      if (loading) return <Text>Loading...</Text>;
-      if (error) return <Text>Error! {error.message}</Text>;
+      if (loading) {
+        return (
+          <Container>
+            <Header style={styles.header}>
+              <Body>
+                <Title style={styles.headerText}>All Reservations</Title>
+              </Body>
+            </Header>
+            <Content contentContainerStyle={styles.centerContainter}>
+              <Text style={{ justifyContent: 'center' }}>Loading...</Text>
+            </Content>
+          </Container>
+        );
+      }
+
+      if (error) {
+        return (
+          <Container>
+            <Header style={styles.header}>
+              <Body>
+                <Title style={styles.headerText}>All Reservations</Title>
+              </Body>
+            </Header>
+            <Content contentContainerStyle={styles.centerContainter}>
+              <Text style={{ justifyContent: 'center' }}>
+                Error! {error.message}
+              </Text>
+            </Content>
+          </Container>
+        );
+      }
 
       return (
         <Container>
@@ -35,7 +67,7 @@ export default () => (
               <List>
                 {data.reservations.map(res => (
                   <Card key={res.id}>
-                    <CardItem bordered>
+                    <CardItem header bordered>
                       <Grid style={styles.gridStyle}>
                         <Text>Reservation ID: {res.id}</Text>
                       </Grid>
@@ -102,5 +134,10 @@ const styles = {
   },
   gridStyle: {
     justifyContent: 'center'
+  },
+  centerContainter: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 };

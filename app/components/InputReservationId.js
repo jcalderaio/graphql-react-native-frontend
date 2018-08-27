@@ -42,7 +42,13 @@ export default class InputReservationId extends Component {
           </Body>
         </Header>
         <Content>
-          <Form style={{ backgroundColor: 'white', marginHorizontal: 20 }}>
+          <Form
+            style={{
+              backgroundColor: 'white',
+              marginHorizontal: 20,
+              marginTop: 30
+            }}
+          >
             <Item inlineLabel>
               <Icon active name="calendar" style={{ color: 'orange' }} />
               <Label

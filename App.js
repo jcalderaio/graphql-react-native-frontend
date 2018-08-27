@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Expo, { Constants } from 'expo'; // Constants for Android status bar
+import Expo from 'expo'; // Constants for Android status bar
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
@@ -80,17 +80,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = {
-  container: {
-    flex: 1
-  },
-  statusBarPadding: {
-    paddingTop: Constants.statusBarHeight
-  },
-  contentContainerStyle: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-};

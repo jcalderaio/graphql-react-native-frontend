@@ -13,6 +13,7 @@ import {
 } from 'native-base';
 import AllReservations from './graphql/AllReservations';
 import InputReservationId from './components/InputReservationId';
+import InputAddReservation from './components/InputAddReservation';
 
 // The data prop, which is provided by the wrapper below contains,
 // a `loading` key while the query is in flight and posts when ready
@@ -33,6 +34,9 @@ export default class Tabs extends Component {
         break;
       case 'findReservation':
         return <InputReservationId />;
+        break;
+      case 'addReservation':
+        return <InputAddReservation />;
         break;
       default:
     }
@@ -59,6 +63,15 @@ export default class Tabs extends Component {
             >
               Find Reservation
               <Icon name="ios-person" />
+            </Button>
+          </FooterTab>
+          <FooterTab>
+            <Button
+              active={this.state.selectedTab === 'addReservation'}
+              onPress={() => this.setState({ selectedTab: 'addReservation' })}
+            >
+              Add Reservation
+              <Icon name="ios-add" />
             </Button>
           </FooterTab>
         </Footer>

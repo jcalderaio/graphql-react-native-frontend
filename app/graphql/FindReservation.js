@@ -7,19 +7,31 @@ import { Dimensions } from 'react-native';
 const midscreen = Dimensions.get('window').height / 4;
 
 export default ({ reservationId }) => (
-  <Query
-    query={GET_RESERVATION}
-    variables={{ id: reservationId }}
-    pollInterval={10}
-  >
-    {({ loading, error, data }) => {
-      if (loading) return <Text>Loading...</Text>;
+  <Query query={GET_RESERVATION} variables={{ id: reservationId }}>
+    {({ loading, error, data, refetch }) => {
+      if (loading) {
+        return (
+          <View style={styles.centerContainter}>
+            <Text style={{ justifyContent: 'center', marginTop: midscreen }}>
+              Loading...
+            </Text>
+          </View>
+        );
+      }
+
       if (error) {
         return (
           <View style={styles.centerContainter}>
             <Text style={{ justifyContent: 'center', marginTop: midscreen }}>
               Please enter a valid Reservation ID...
             </Text>
+            <Button
+              onPress={() => refetch()}
+              block
+              style={styles.reservationButton}
+            >
+              <Text>Submit</Text>
+            </Button>
           </View>
         );
       }
@@ -53,7 +65,13 @@ export default ({ reservationId }) => (
               </Grid>
             </CardItem>
           </Card>
-          <View />
+          <Button
+            onPress={() => refetch()}
+            block
+            style={styles.reservationButton}
+          >
+            <Text>Submit</Text>
+          </Button>
         </View>
       );
     }}
@@ -76,7 +94,7 @@ const styles = {
   reservationButton: {
     backgroundColor: '#EF5350',
     marginHorizontal: 20,
-    marginTop: 20,
+    marginTop: 40,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
@@ -88,80 +106,3 @@ const styles = {
     alignItems: 'center'
   }
 };
-
-/*
-// A mutation is made available on a callback called `mutate`
-// Other props of the wrapping component are passed through.
-function FindReservation({ data: { loading, reservation } }) {
-  if (loading) {
-    return <Text>Loading...</Text>;
-  } else {
-    if (reservation) {
-      return (
-        <View>
-          <Card key={reservation.id}>
-            <CardItem bordered>
-              <Grid style={styles.gridStyle}>
-                <Text>Name on Reservation: {reservation.name}</Text>
-              </Grid>
-            </CardItem>
-            <CardItem bordered>
-              <Grid style={styles.gridStyle}>
-                <Text>Hotel: {reservation.hotelName}</Text>
-              </Grid>
-            </CardItem>
-            <CardItem bordered>
-              <Grid style={styles.gridStyle}>
-                <Text>Check-In Date: {reservation.arrivalDate}</Text>
-              </Grid>
-            </CardItem>
-            <CardItem bordered>
-              <Grid style={styles.gridStyle}>
-                <Text>Check-Out Date: {reservation.departureDate}</Text>
-              </Grid>
-            </CardItem>
-          </Card>
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.centerContainter}>
-          <Text style={{ justifyContent: 'center', marginTop: midscreen }}>
-            Please enter a reservation ID...
-          </Text>
-        </View>
-      );
-    }
-  }
-}
-
-/*
-<View>
-      <Button block style={styles.reservationButton}>
-        <Text>Find Reservation</Text>
-      </Button>
-    </View>
-
-
-const graphqlVariables = ( { reservationId }) => ({
-  variables: {
-    id: reservationId
-  }
-});
-
-// You can also use `graphql` for GraphQL mutations
-export default graphql(
-  gql`
-    query reservation($id: ID!) {
-      reservation(id: $id) {
-        name
-        id
-        hotelName
-        arrivalDate
-        departureDate
-      }
-    }
-  `,
-  { options: graphqlVariables }
-)(FindReservation);
-*/
