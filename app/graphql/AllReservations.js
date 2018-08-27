@@ -1,6 +1,7 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import DeleteReservation from './DeleteReservation';
 import {
   Container,
   Header,
@@ -11,8 +12,15 @@ import {
   Text,
   Card,
   CardItem,
-  Grid
+  Grid,
+  Col,
+  View,
+  Button
 } from 'native-base';
+
+import { Dimensions } from 'react-native';
+
+const midscreen = Dimensions.get('window').height / 4;
 
 // The data prop, which is provided by the wrapper below contains,
 // a `loading` key while the query is in flight and posts when ready
@@ -28,8 +36,10 @@ export default () => (
                 <Title style={styles.headerText}>All Reservations</Title>
               </Body>
             </Header>
-            <Content contentContainerStyle={styles.centerContainter}>
-              <Text style={{ justifyContent: 'center' }}>Loading...</Text>
+            <Content contentContainerStyle={{ flex: 1 }}>
+              <Grid style={styles.centerContainter}>
+                <Text>Loading...</Text>
+              </Grid>
             </Content>
           </Container>
         );
@@ -43,10 +53,10 @@ export default () => (
                 <Title style={styles.headerText}>All Reservations</Title>
               </Body>
             </Header>
-            <Content contentContainerStyle={styles.centerContainter}>
-              <Text style={{ justifyContent: 'center' }}>
-                Error! {error.message}
-              </Text>
+            <Content contentContainerStyle={{ flex: 1 }}>
+              <Grid style={styles.centerContainter}>
+                <Text>Error! {error.message}</Text>
+              </Grid>
             </Content>
           </Container>
         );
@@ -64,10 +74,11 @@ export default () => (
               <List>
                 {data.reservations.map(res => (
                   <Card key={res.id}>
-                    <CardItem header bordered>
-                      <Grid style={styles.gridStyle}>
+                    <CardItem header bordered style={{ flex: 1 }}>
+                      <Grid style={{ flex: 9 }}>
                         <Text>Reservation ID: {res.id}</Text>
                       </Grid>
+                      <DeleteReservation id={res.id} style={{ flex: 0.5 }} />
                     </CardItem>
                     <CardItem bordered>
                       <Grid style={styles.gridStyle}>
@@ -95,7 +106,9 @@ export default () => (
             )}
             {data.reservations.length <= 0 && (
               <Grid style={styles.gridStyle}>
-                <Text>No Reservations to Show</Text>
+                <Text style={{ paddingTop: midscreen }}>
+                  No Reservations to Show
+                </Text>
               </Grid>
             )}
           </Content>
