@@ -27,9 +27,22 @@ export default class InputAddReservation extends Component {
       name: '',
       hotelName: '',
       arrivalDate: '',
-      departureDate: '',
-      submitted: false
+      departureDate: ''
     };
+  }
+
+  get validated() {
+    if (
+      this.state.id != '' &&
+      this.state.name != '' &&
+      this.state.hotelName != '' &&
+      this.state.arrivalDate != '' &&
+      this.state.departureDate != ''
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   clearForm = () => {

@@ -1,12 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { View, Text, Button } from 'native-base';
-import { Dimensions } from 'react-native';
-
-const midscreen = Dimensions.get('window').height / 4;
-
-let errorMessage = '';
 
 const AddReservation = ({
   id,
@@ -14,29 +9,36 @@ const AddReservation = ({
   hotelName,
   arrivalDate,
   departureDate,
+  validated,
   clearForm
 }) => (
   <Mutation
     mutation={ADD_RESERVATION}
     variables={{ id, name, hotelName, arrivalDate, departureDate }}
   >
-    {addReservation => (
+    {mutate => (
       <View>
-        <Button
-          onPress={() => {
-            if (true) {
-              addReservation();
-            } else {
-              errorMessage = 'Please enter ALL fields!';
-            }
-            clearForm();
-          }}
-          block
-          style={styles.reservationButton}
-        >
-          <Text>Submit</Text>
-        </Button>
-        <Text>{errorMessage}</Text>
+        {validated && (
+          <Button
+            onPress={() => {
+              mutate({
+                refetchQueries: ['getAllReservations']
+              });
+              //client.queryManager.refetchQueryByName('getAllReservations');
+              clearForm();
+              alert('Reservation Added!');
+            }}
+            block
+            style={styles.reservationButton}
+          >
+            <Text>Submit</Text>
+          </Button>
+        )}
+        {!validated && (
+          <Text style={{ alignSelf: 'center', marginTop: 60 }}>
+            Please fill EVERY field!
+          </Text>
+        )}
       </View>
     )}
   </Mutation>

@@ -13,15 +13,12 @@ import {
   CardItem,
   Grid
 } from 'native-base';
-import { Dimensions } from 'react-native';
-
-const midscreen = Dimensions.get('window').height / 4;
 
 // The data prop, which is provided by the wrapper below contains,
 // a `loading` key while the query is in flight and posts when ready
 //All Reservations
 export default () => (
-  <Query query={GET_RESERVATIONS} pollInterval={500}>
+  <Query query={GET_RESERVATIONS}>
     {({ loading, error, data }) => {
       if (loading) {
         return (
@@ -109,7 +106,7 @@ export default () => (
 );
 
 const GET_RESERVATIONS = gql`
-  {
+  query getAllReservations {
     reservations {
       id
       name
