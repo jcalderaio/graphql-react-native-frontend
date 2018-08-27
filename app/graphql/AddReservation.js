@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { View, Text, Button } from 'native-base';
 
-const AddReservation = ({
+export default ({
   id,
   name,
   hotelName,
@@ -84,5 +84,3 @@ const styles = {
     alignItems: 'center'
   }
 };
-
-export default AddReservation;
