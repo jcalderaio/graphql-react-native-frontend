@@ -14,6 +14,7 @@ import {
   Button,
   Icon
 } from 'native-base';
+import DatePicker from 'react-native-datepicker';
 import { Ionicons } from '@expo/vector-icons';
 
 // The data prop, which is provided by the wrapper below contains,
@@ -139,9 +140,29 @@ export default class InputAddReservation extends Component {
               >
                 Arrival Date
               </Label>
-              <Input
-                value={this.state.arrivalDate}
-                onChangeText={arrivalDate => this.setState({ arrivalDate })}
+              <DatePicker
+                style={{ width: 200 }}
+                date={this.state.arrivalDate}
+                mode="date"
+                placeholder="select date"
+                format="YYYY-MM-DD"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: 'absolute',
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                  // ... You can check the source to find the other keys.
+                }}
+                onDateChange={arrivalDate => {
+                  this.setState({ arrivalDate });
+                }}
               />
             </Item>
             <Item inlineLabel>
@@ -153,9 +174,29 @@ export default class InputAddReservation extends Component {
               >
                 Departure Date
               </Label>
-              <Input
-                value={this.state.departureDate}
-                onChangeText={departureDate => this.setState({ departureDate })}
+              <DatePicker
+                style={{ width: 200 }}
+                date={this.state.departureDate}
+                mode="date"
+                placeholder="select date"
+                format="YYYY-MM-DD"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: 'absolute',
+                    left: 0,
+                    top: 4,
+                    marginLeft: 0
+                  },
+                  dateInput: {
+                    marginLeft: 36
+                  }
+                  // ... You can check the source to find the other keys.
+                }}
+                onDateChange={departureDate => {
+                  this.setState({ departureDate });
+                }}
               />
             </Item>
           </Form>
