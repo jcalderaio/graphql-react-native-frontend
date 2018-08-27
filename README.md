@@ -1,4 +1,4 @@
-# Apollo-Graphql Frontend
+# Apollo-Graphql React Native Frontend
 
 -I created a UI using React Native and Apollo Client which "talks" with the graphql-express-server on the backend. Although I use class-based components in the app, I only use Pure Components if they make a Graphql call. I use the Apollo Client to make calls to GraphQl. I implemented Components for the following calls to the Graphql Server:
 
